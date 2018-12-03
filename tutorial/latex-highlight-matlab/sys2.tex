@@ -1,0 +1,38 @@
+\documentclass[a4paper,10pt]{article}
+    \usepackage{alltt}
+    \usepackage{color}
+    \usepackage{fullpage}
+    \definecolor{string}{rgb}{0.7,0.0,0.0}
+    \definecolor{comment}{rgb}{0.13,0.54,0.13}
+    \definecolor{keyword}{rgb}{0.0,0.0,1.0}
+    \title{../tutorial/sys2_van_der_pol.m}
+    \author{\textsc{Matlab}, The Mathworks, Inc.}
+\begin{document}
+\maketitle
+\begin{alltt}
+0001 sys2 = BioSystem();
+0002 
+0003 x = sys2.AddCompositor(\textcolor{string}{'x'}, 1);
+0004 y = sys2.AddCompositor(\textcolor{string}{'y'}, 0.5);
+0005 
+0006 sys2.AddConstant(\textcolor{string}{'mu'}, 5);
+0007 
+0008 sys2.AddPart(Part(\textcolor{string}{'Van der Pol'}, [x y], \textcolor{keyword}{\underline{...}}
+0009     [ Rate(\textcolor{string}{'y'}) \textcolor{keyword}{\underline{...}}textcolor{comment}{ \% x}
+0010       Rate(\textcolor{string}{'mu * (1 - x\^{}2) * y - x'}), \textcolor{keyword}{\underline{...}}textcolor{comment}{ \% y}
+0011     ]));
+0012 
+0013 figure();
+0014 hold all; \textcolor{comment}{% plot() will use same figure, different colors}
+0015 time\_interval = [0 80];
+0016 \textcolor{keyword}{for} mu = [0 1 5 25]
+0017     sys2.ChangeConstant(\textcolor{string}{'mu'}, mu)
+0018     [T, Y] = sys2.run(time\_interval);
+0019     plot(T, Y(:, 1))
+0020 \textcolor{keyword}{end}
+0021 
+0022 legend(\textcolor{string}{'\(\backslash\)mu = 0,'}, \textcolor{string}{'\(\backslash\)mu = 1'}, \textcolor{string}{'\(\backslash\)mu = 5'}, \textcolor{string}{'\(\backslash\)mu = 25'})
+0023 xlabel(\textcolor{string}{'Time'})
+0024 ylabel(\textcolor{string}{'Value'})
+\end{alltt}
+\end{document}

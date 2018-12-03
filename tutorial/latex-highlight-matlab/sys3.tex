@@ -1,0 +1,50 @@
+\documentclass[a4paper,10pt]{article}
+    \usepackage{alltt}
+    \usepackage{color}
+    \usepackage{fullpage}
+    \definecolor{string}{rgb}{0.7,0.0,0.0}
+    \definecolor{comment}{rgb}{0.13,0.54,0.13}
+    \definecolor{keyword}{rgb}{0.0,0.0,1.0}
+    \title{../tutorial/sys3_relaxation_oscillator.m}
+    \author{\textsc{Matlab}, The Mathworks, Inc.}
+\begin{document}
+
+\begin{alltt}
+0001 sys3 = BioSystem();
+0002 
+0003 A = sys3.AddCompositor(\textcolor{string}{'A'}, 10); mA = sys3.AddCompositor(\textcolor{string}{'mA'}, 1);
+0004 B = sys3.AddCompositor(\textcolor{string}{'B'}, 10); mB = sys3.AddCompositor(\textcolor{string}{'mB'}, 1);
+0005 
+0006 sys3.AddConstant(\textcolor{string}{'k\_tx'}, 5); sys3.AddConstant(\textcolor{string}{'k\_tl'}, 5);
+0007 sys3.AddConstant(\textcolor{string}{'k\_mdeg'}, 0.5); sys3.AddConstant(\textcolor{string}{'k\_pdeg'}, 0.05);
+0008 sys3.AddConstant(\textcolor{string}{'K\_A'}, 1); sys3.AddConstant(\textcolor{string}{'K\_B'}, 2);
+0009 sys3.AddConstant(\textcolor{string}{'n'}, 2);
+0010 
+0011 sys3.AddPart(Part(\textcolor{string}{'Transcription of A'}, [mA], \textcolor{keyword}{\underline{...}}
+0012     [ Rate(\textcolor{string}{'k\_tx * A\^{}n / (K\_A\^{}n + A\^{}n) * K\_B\^{}n / (K\_B\^{}n + B\^{}n)'}) ]));
+0013 
+0014 sys3.AddPart(Part(\textcolor{string}{'Transcription of B'}, [mB], \textcolor{keyword}{\underline{...}}
+0015     [ Rate(\textcolor{string}{'k\_tx * A\^{}n / (K\_A\^{}n + A\^{}n)'}) ]));
+0016 
+0017 sys3.AddPart(Part(\textcolor{string}{'Translation of A'}, [A], \textcolor{keyword}{\underline{...}}
+0018     [ Rate(\textcolor{string}{'k\_tl * mA'}) ]));
+0019 sys3.AddPart(Part(\textcolor{string}{'Translation of B'}, [B], \textcolor{keyword}{\underline{...}}
+0020     [ Rate(\textcolor{string}{'k\_tl * mB'}) ]));
+0021 
+0022 sys3.AddPart(Part(\textcolor{string}{'Degradation of A'}, [A], \textcolor{keyword}{\underline{...}}
+0023     [ Rate(\textcolor{string}{'- k\_pdeg * A'}) ]));
+0024 sys3.AddPart(Part(\textcolor{string}{'Degradation of mA'}, [mA], \textcolor{keyword}{\underline{...}}
+0025     [ Rate(\textcolor{string}{'- k\_mdeg * mA'}) ]));
+0026 sys3.AddPart(Part(\textcolor{string}{'Degradation of B'}, [B], \textcolor{keyword}{\underline{...}}
+0027     [ Rate(\textcolor{string}{'- k\_pdeg * B'}) ]));
+0028 sys3.AddPart(Part(\textcolor{string}{'Degradation of mB'}, [mB], \textcolor{keyword}{\underline{...}}
+0029     [ Rate(\textcolor{string}{'- k\_mdeg * mB'}) ]));
+0030 
+0031 figure();
+0032 [T, Y] = sys3.run([0 2000]);
+0033 plot(T, Y);
+0034 legend(\textcolor{string}{'A'}, \textcolor{string}{'m\_A'}, \textcolor{string}{'B'}, \textcolor{string}{'m\_B'});
+0035 xlabel(\textcolor{string}{'Time'});
+0036 ylabel(\textcolor{string}{'Concentration'});
+\end{alltt}
+\end{document}

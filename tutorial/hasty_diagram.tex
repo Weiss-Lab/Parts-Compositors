@@ -1,0 +1,20 @@
+% Author: Marek Fiser <tikz at marekfiser.cz>
+% MESIF protocol: http://en.wikipedia.org/wiki/MESIF_protocol
+\documentclass[tikz, border=10pt]{standalone}
+\usetikzlibrary{arrows}
+\begin{document}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+  thick,main node/.style={font=\sffamily\Large\bfseries}]
+
+  \node[main node] (A) {A};
+  \node[main node] (B) [right of=A] {B};
+
+  \path[every node/.style={font=\sffamily\small}]
+
+    (A) edge [loop left,looseness=5,out=135,in=225,] node {} (A)
+    (A) edge [bend right] node {} (B)
+    (B) edge [bend right,-|] node {} (A)
+;
+\end{tikzpicture}
+
+\end{document}
